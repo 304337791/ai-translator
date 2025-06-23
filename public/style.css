@@ -1,0 +1,340 @@
+/* 全局样式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 25px;
+}
+
+/* 语言选择器 */
+.language-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 内部元素间距 */
+    flex-grow: 1; /* 让语言选择器占据所有剩余空间 */
+    justify-content: flex-end; /* 让语言选择器靠右对齐 */
+    min-width: 220px; /* 给一个最小宽度，防止被过度压缩 */
+}
+
+.language-selector select {
+    width: auto; /* 让宽度自适应内容 */
+    flex-grow: 1; /* 让两个下拉框平分剩余空间 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    font-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007AFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px auto;
+}
+
+.swap-icon {
+    font-size: 20px;
+    cursor: pointer;
+    color: #007aff;
+    flex-shrink: 0; /* 防止交换图标被压缩 */
+}
+
+/* 文本输入框 */
+textarea#text-input {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: vertical;
+    font-size: 16px;
+    box-sizing: border-box; /* 重要 */
+    margin-bottom: 15px;
+}
+
+/* 输出区域 */
+.output-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.output-box {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    box-sizing: border-box;
+    white-space: pre-wrap; /* 保持换行 */
+    word-wrap: break-word; /* 自动换行 */
+}
+
+.output-box:empty:before {
+    content: attr(placeholder);
+    color: #999;
+}
+
+.status {
+    position: absolute;
+    bottom: -20px;
+    right: 5px;
+    font-size: 12px;
+    color: #888;
+}
+
+
+/* 按钮 */
+.button-grid {
+    display: grid;
+    gap: 10px;
+}
+
+button {
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007aff;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+button:active {
+    background-color: #0056b3;
+}
+.top-controls-container {
+    display: flex;          /* 核心：开启Flex布局 */
+    flex-wrap: wrap;        /* 允许子元素在空间不足时换行 */
+    align-items: center;    /* 让所有子元素在交叉轴（垂直方向）上居中对齐 */
+    gap: 15px;              /* 设置子元素之间的间距 */
+    margin-bottom: 15px;
+}
+
+/* 模型选择器样式 */
+.model-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0; /* 防止模型选择器被过度压缩 */
+}
+
+.model-selector label {
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap; /* 防止标签文字换行 */
+}
+
+.model-selector select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    font-size: 16px;
+}
+
+/* 图片预览容器样式 */
+#image-preview-container {
+    position: relative; /* 关键：为子元素的绝对定位提供基准 */
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 4px;
+}
+
+/* 对话模式按钮样式 */
+#conversation-btn {
+    transition: background-color 0.3s ease;
+}
+
+.conversation-btn-start {
+    background-color: #28a745; /* 绿色，表示“开始” */
+}
+
+.conversation-btn-stop {
+    background-color: #dc3545; /* 红色，表示“停止” */
+}
+
+/* 对话模式状态显示框样式 */
+.status-box {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    min-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #495057;
+    line-height: 1.5;
+}
+
+/* --- 您需要追加到文件末尾的所有样式 --- */
+
+/* 修改点1：调整语言选择器 */
+.language-selector select {
+    flex-basis: 100px; /* 控制下拉框基础宽度，让它变短 */
+}
+.swap-icon {
+    font-size: 24px;   /* 增大箭头 */
+    font-weight: bold;
+    padding: 0 5px;
+    transition: transform 0.2s ease-in-out;
+}
+.swap-icon:hover {
+    transform: scale(1.1) rotate(180deg);
+}
+
+/* 修改点6：增大输入/输出框字号 */
+textarea#text-input, .output-box {
+    font-size: 18px;
+    line-height: 1.6;
+    padding-right: 15px; /* 恢复内边距 */
+}
+
+/* 修改点5：输入框容器和清空按钮样式 */
+.input-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+textarea#text-input {
+    padding-right: 40px; /* 为清空按钮留出空间 */
+}
+.clear-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ccc;
+    color: white;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+
+    /* --- 使用 Flexbox 进行完美居中 --- */
+    display: flex;
+    align-items: center;    /* 垂直居中 */
+    justify-content: center;/* 水平居中 */
+    padding: 0;             /* 移除可能的默认内边距 */
+    padding-bottom: 2px;    /* 微调，让叉号视觉上更居中 */
+    font-size: 20px;        /* 可以微调叉号大小 */
+    line-height: 1;         /* 重置 line-height，避免干扰 */
+}.clear-btn:hover {
+    opacity: 1;
+}
+
+/* 修改点3：删除图片按钮样式 */
+.delete-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    z-index: 10;
+
+    /* --- 使用 Flexbox 进行完美居中 (最终修正) --- */
+    display: flex;
+    align-items: center;    /* 垂直居中 */
+    justify-content: center;/* 水平居中 */
+    padding: 0;             /* 移除内边距 */
+    padding-bottom: 2px;    /* 对"×"号进行视觉微调 */
+    font-size: 20px;        /* 叉号大小 */
+    line-height: 1;         /* 重置行高 */
+}
+
+.delete-btn:hover {
+    transform: scale(1.1);
+}
+/* 修改点4：优化图片翻译结果的显示格式 */
+.output-box h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #007aff;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #eee;
+}
+.output-box hr {
+   display: none; /* AI生成的hr不好看，我们用h3的下边框代替 */
+}
+
+/* 翻译结果框的清空按钮样式 */
+.output-container .clear-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+/* --- 您需要追加到文件末尾的动画样式 --- */
+
+/* 定义一个动态省略号的关键帧动画 */
+@keyframes loading-dots {
+    0% { content: ' .'; }
+    33% { content: ' ..'; }
+    66% { content: ' ...'; }
+    100% { content: ' .'; }
+}
+
+/* 当输出框处于加载状态时应用的样式 */
+.output-box.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-style: italic;
+}
+
+/* 使用 ::before 伪元素显示“翻译中”等文字 */
+.output-box.loading-indicator::before {
+    content: attr(data-loading-text); /* 读取HTML中设置的加载文字 */
+}
+
+/* 使用 ::after 伪元素显示动态的省略号 */
+.output-box.loading-indicator::after {
+    animation: loading-dots 1.5s infinite;
+    content: '...';
+}
