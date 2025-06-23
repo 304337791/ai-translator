@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
    const clearInputBtn = document.getElementById('clear-input-btn');
    const deleteImageBtn = document.getElementById('delete-image-btn');
    const clearOutputBtn = document.getElementById('clear-output-btn');
+   const copyOutputBtn = document.getElementById('copy-output-btn');
+   const toggleThemeBtn = document.getElementById('toggle-theme-btn');
 
 
     // --- 2. 文字翻译功能 (不变) ---
@@ -178,13 +180,13 @@ clearOutputBtn.style.display = 'block';
             .then(stream => {
                 mediaRecorder = new MediaRecorder(stream);
                 
-                // “按住说话”功能事件绑定
+                // "按住说话"功能事件绑定
                 recordBtn.addEventListener('mousedown', () => { if(isContinuousModeActive) return; audioChunks = []; mediaRecorder.start(); recordStatus.innerText = '录音中...'; });
                 recordBtn.addEventListener('touchstart', (e) => { e.preventDefault(); recordBtn.dispatchEvent(new Event('mousedown')); });
                 recordBtn.addEventListener('mouseup', () => { if(isContinuousModeActive || mediaRecorder.state !== 'recording') return; recordStatus.innerText = '录音结束，分析中...'; mediaRecorder.stop(); });
                 recordBtn.addEventListener('touchend', (e) => { e.preventDefault(); recordBtn.dispatchEvent(new Event('mouseup')); });
                 
-                // “持续翻译”功能事件绑定
+                // "持续翻译"功能事件绑定
                 conversationBtn.addEventListener('click', () => {
                     isContinuousModeActive = !isContinuousModeActive;
                     if (isContinuousModeActive) {
@@ -235,7 +237,7 @@ if(swapLangBtn) {
         const targetVal = targetLangSelect.value;
 
         if (sourceVal === 'auto') {
-            alert('“自动检测”模式无法被设为目标语言。');
+            alert('"自动检测"模式无法被设为目标语言。');
             return;
         }
         sourceLangSelect.value = targetVal;
@@ -296,6 +298,79 @@ if(clearOutputBtn) {
         outputDiv.innerHTML = ''; // 清空内容
         clearOutputBtn.style.display = 'none'; // 隐藏自己
         statusText.innerText = ''; // 清空状态
+        toggleCopyBtn(); // 同步隐藏复制按钮
     });
 }
+
+// =================== 新增功能区 ===================
+
+// 1) 主题切换
+const applyTheme = (theme) => {
+    if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+        if (toggleThemeBtn) toggleThemeBtn.textContent = '☀️';
+    } else {
+        document.body.classList.remove('dark-theme');
+        if (toggleThemeBtn) toggleThemeBtn.textContent = '🌙';
+    }
+};
+const savedTheme = localStorage.getItem('theme') || 'light';
+applyTheme(savedTheme);
+if (toggleThemeBtn) {
+    toggleThemeBtn.addEventListener('click', () => {
+        const nextTheme = document.body.classList.contains('dark-theme') ? 'light' : 'dark';
+        localStorage.setItem('theme', nextTheme);
+        applyTheme(nextTheme);
+    });
+}
+
+// 2) 复制翻译结果
+if(copyOutputBtn) {
+    copyOutputBtn.addEventListener('click', () => {
+        const txt = outputDiv.innerText.trim();
+        if (!txt) return;
+        navigator.clipboard.writeText(txt).then(() => {
+            statusText.innerText = '已复制';
+            setTimeout(() => { if(statusText.innerText === '已复制') statusText.innerText = ''; }, 1500);
+        });
+    });
+}
+const toggleCopyBtn = () => {
+    if(copyOutputBtn) {
+        copyOutputBtn.style.display = outputDiv.innerText.trim().length ? 'block' : 'none';
+    }
+};
+
+// 3) 保存/恢复用户选择
+const restoreSelectValue = (select, key) => {
+    const v = localStorage.getItem(key);
+    if (v && Array.from(select.options).some(o => o.value === v)) {
+        select.value = v;
+    }
+};
+restoreSelectValue(sourceLangSelect, 'sourceLang');
+restoreSelectValue(targetLangSelect, 'targetLang');
+restoreSelectValue(modelSelect, 'model');
+
+[sourceLangSelect, targetLangSelect, modelSelect].forEach((sel, idx) => {
+    const keys = ['sourceLang', 'targetLang', 'model'];
+    sel.addEventListener('change', () => localStorage.setItem(keys[idx], sel.value));
+});
+
+// 4) 快捷键 Ctrl+Enter 触发翻译
+if(textInput && translateBtn) {
+    textInput.addEventListener('keydown', (e) => {
+        if(e.ctrlKey && e.key === 'Enter') {
+            translateBtn.click();
+        }
+    });
+}
+
+// 5) 页面加载聚焦输入框
+textInput && textInput.focus();
+
+// 6) 监听输出框变化，自动控制复制按钮显示
+const observer = new MutationObserver(toggleCopyBtn);
+observer.observe(outputDiv, { childList: true, characterData: true, subtree: true });
+toggleCopyBtn();
 });

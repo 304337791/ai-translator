@@ -423,3 +423,54 @@ textarea#text-input:focus, .language-selector select:focus, .model-selector sele
 ::-webkit-scrollbar-thumb:hover {
     background: #c7d7ef;
 }
+
+/* ==== 新增：图标按钮样式 ==== */
+.round-icon-btn, .copy-btn {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.round-icon-btn:hover, .copy-btn:hover {
+    background-color: #d0d0d0;
+    transform: scale(1.08);
+}
+/* 复制按钮位于清空按钮左侧 */
+.output-container .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 48px;
+}
+
+/* ==== 新增：深色主题支持 ==== */
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-theme .container {
+    background-color: #1e1e1e;
+}
+body.dark-theme textarea#text-input,
+body.dark-theme .output-box,
+body.dark-theme select {
+    background-color: #262626;
+    color: #e0e0e0;
+    border-color: #333;
+}
+body.dark-theme .output-box {
+    background: #262626;
+}
+body.dark-theme button {
+    background: linear-gradient(90deg, #0056b3 0%, #007aff 100%);
+}
+body.dark-theme .round-icon-btn,
+body.dark-theme .copy-btn {
+    background-color: #333;
+    color: #e0e0e0;
+}
