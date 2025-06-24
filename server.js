@@ -178,7 +178,7 @@ Format your final response strictly as follows, using these exact headings:
 (Your explanation in ${finalTargetLang} goes here)`;
         
         const response = await openai.chat.completions.create({
-            model: model && model.includes('4') ? model : 'gpt-4.1-2025-04-14',
+            model: model && model.trim() !== '' ? model : 'gpt-4o-mini',
             messages: [
                 {
                     role: "user",
